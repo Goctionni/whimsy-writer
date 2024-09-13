@@ -1,5 +1,10 @@
 # Readme
 
+## What users should do
+
+1. Setup src/save-interface.ts with their save-file-format
+2. Setup init.ts with their game's name and initial state
+
 ## Todo
 
 Link onclick

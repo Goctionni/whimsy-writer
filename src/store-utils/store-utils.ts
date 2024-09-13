@@ -1,19 +1,5 @@
-import { ComponentType } from 'react';
-import { create } from 'zustand';
-
-type Passage<T = unknown> = ComponentType<T>;
-
-interface GameStateStore {
-  title?: string;
-  openingPassage?: Passage;
-  history: Passage[];
-  historyIndex: number;
-}
-
-export const useGameState = create<GameStateStore>(() => ({
-  history: [],
-  historyIndex: 0,
-}));
+import { Passage } from '../base-components/types';
+import { useGameState } from '../init';
 
 export function useCurrentPassage() {
   const history = useGameState((state) => state.history);
@@ -59,7 +45,7 @@ export function useCanGoForwards() {
   return useGameState((state) => state.historyIndex + 1 < state.history.length);
 }
 
-export function gotoPassage(passage: ComponentType<unknown>) {
+export function gotoPassage(passage: Passage) {
   useGameState.setState((current) => {
     const newIndex = current.historyIndex + 1;
     const newHistory = [...current.history.slice(0, newIndex), passage];

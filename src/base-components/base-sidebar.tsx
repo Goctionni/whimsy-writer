@@ -1,6 +1,6 @@
-import { goBack, goForwards, useCanGoBack, useCanGoForwards, useGameTitle } from '../story-utils/state-store';
+import { goBack, goForwards, useCanGoBack, useCanGoForwards, useGameTitle } from '../store-utils/store-utils';
 
-export function Sidebar() {
+export function BaseSidebar() {
   const title = useGameTitle();
   const canGoBack = useCanGoBack();
   const canGoForwards = useCanGoForwards();

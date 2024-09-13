@@ -1,6 +1,6 @@
-import { useCurrentPassage } from '../story-utils/state-store';
+import { useCurrentPassage } from '../store-utils/store-utils';
 
-export function StoryOutlet() {
+export function BaseStoryOutlet() {
   const CurrentPassage = useCurrentPassage();
   if (!CurrentPassage) return <div>Error! No current passage</div>;
 

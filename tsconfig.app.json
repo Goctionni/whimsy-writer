@@ -7,8 +7,8 @@
     "skipLibCheck": true,
 
     "paths": {
-      "@passage/*": ["src/passages/*"],
-      "@p/*": ["src/passages/*"]
+      "@passage/*": ["./src/passages/*"],
+      "@p/*": ["./src/passages/*"]
     },
 
     /* Bundler mode */

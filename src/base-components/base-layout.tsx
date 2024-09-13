@@ -1,13 +1,13 @@
 import { ComponentType } from 'react';
-import { Sidebar as DefaultSidebar } from './sidebar';
-import { StoryOutlet as DefaultStoryOutlet } from './story-outlet';
+import { BaseSidebar } from './base-sidebar';
+import { BaseStoryOutlet } from './base-story-outlet';
 
 interface Props {
   Sidebar?: ComponentType<unknown>;
   StoryOutlet?: ComponentType<unknown>;
 }
 
-export function Layout({ Sidebar = DefaultSidebar, StoryOutlet = DefaultStoryOutlet }: Props) {
+export function BaseLayout({ Sidebar = BaseSidebar, StoryOutlet = BaseStoryOutlet }: Props) {
   return (
     <div className="flex w-full h-full">
       <div className="w-52">
