@@ -4,5 +4,9 @@ export function StoryOutlet() {
   const CurrentPassage = useCurrentPassage();
   if (!CurrentPassage) return <div>Error! No current passage</div>;
 
-  return <CurrentPassage />;
+  return (
+    <div className="prose prose-invert">
+      <CurrentPassage />
+    </div>
+  );
 }

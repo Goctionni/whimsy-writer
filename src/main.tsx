@@ -10,7 +10,7 @@ setup({
   openingPassage: Start,
 });
 
-createRoot(document.body).render(
+createRoot(document.body.firstElementChild!).render(
   <StrictMode>
     <Layout />
   </StrictMode>,
