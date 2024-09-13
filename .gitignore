@@ -1,3 +1,6 @@
+# Generates
+src/__generated/*
+
 # Logs
 logs
 *.log
