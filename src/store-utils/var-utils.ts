@@ -1,44 +1,55 @@
+import { useMemo } from 'react';
 import { useGameState } from '../init';
 
-function createPathProxy<T>(path: string[] = []) {
-  return new Proxy(
-    {},
-    {
-      get(_, prop: string) {
-        if (prop === '__path') {
-          // Return the current path as a string
-          return path;
-        }
+function createProxy<T extends object>(data: T, update: (newValue: unknown) => unknown) {
+  const memoizedGet: Record<PropertyKey, unknown> = {};
+  const clone = Array.isArray(data) ? data.slice() : { ...data };
 
-        // Recursively create a new proxy with the updated path
-        return createPathProxy([...path, prop]);
-      },
+  return new Proxy(data, {
+    get(_, prop) {
+      if (prop in memoizedGet) return memoizedGet[prop];
+      if (!(prop in data)) return Reflect.get(clone, prop, clone);
+      const value = Reflect.get(clone, prop, clone);
+      if (!value) return value;
+      const type = typeof value;
+      if (type !== 'object') return value;
+      const childProxy = createProxy(value, (newValue) => {
+        Reflect.set(clone, prop, newValue, clone);
+        update(clone);
+      });
+      memoizedGet[prop] = childProxy;
+      return childProxy;
     },
-  ) as T;
+    set(_, prop, newValue) {
+      const result = Reflect.set(clone, prop, newValue, clone);
+      if (result) update(clone);
+      return result;
+    },
+    deleteProperty(_, prop) {
+      const result = Reflect.deleteProperty(clone, prop);
+      if (result) update(clone);
+      return result;
+    },
+    defineProperty(_, prop, attributes) {
+      const result = Reflect.defineProperty(clone, prop, attributes);
+      if (result) update(clone);
+      return result;
+    },
+  });
 }
 
-export const $var = createPathProxy<Variables>();
+export function variables() {
+  const vars = useGameState.getState().variables;
+  return createProxy(vars, (newValue) => {
+    useGameState.setState({ variables: newValue as Variables });
+  });
+}
 
-function writeDeep(obj: Record<string, any>, path: string[], value: any) {
-  const [first, ...rest] = path;
-  const deepValue: any = rest.length ? writeDeep(obj[first], rest, value) : value;
-  if (Array.isArray(obj)) {
-    return obj.map((item, index) => {
-      if (index !== parseInt(first)) return item;
-      return deepValue;
+export function useVariables() {
+  const vars = useGameState((state) => state.variables);
+  return useMemo(() => {
+    return createProxy(vars, (newValue) => {
+      useGameState.setState({ variables: newValue as Variables });
     });
-  }
-  return {
-    ...obj,
-    [first]: deepValue,
-  };
-}
-
-export function set<T>(variable: T, value: T) {
-  const varPath = (variable as { __path: string[] }).__path;
-  if (!varPath) throw new Error('Variable-path could not be determined');
-
-  const state = useGameState.getState().variables;
-
-  console.log(varPath, value, state, writeDeep(state, varPath, value));
+  }, [vars]);
 }

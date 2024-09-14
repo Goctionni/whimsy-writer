@@ -1,7 +1,12 @@
-import { goBack, goForwards, useCanGoBack, useCanGoForwards, useGameTitle } from '../store-utils/store-utils';
+import { useGameState } from '../init';
+import { useCanGoBack, useCanGoForwards } from '../store-utils/store-utils';
 
 export function BaseSidebar() {
-  const title = useGameTitle();
+  const { title, goBack, goForwards } = useGameState((state) => ({
+    title: state.title,
+    goBack: state.goBack,
+    goForwards: state.goForwards,
+  }));
   const canGoBack = useCanGoBack();
   const canGoForwards = useCanGoForwards();
 
