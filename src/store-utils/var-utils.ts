@@ -1,6 +1,15 @@
 import { useMemo } from 'react';
 import { useGameState } from '../init';
 
+// TODO:
+// array.splice
+// array.sort
+// array.push
+// array.pop
+// array.shift
+// array.unshift
+// reverse
+
 function createProxy<T extends object>(data: T, update: (newValue: unknown) => unknown) {
   const memoizedGet: Record<PropertyKey, unknown> = {};
   const clone = Array.isArray(data) ? data.slice() : { ...data };

@@ -3,7 +3,7 @@ import { useGameState } from '../init';
 export function useCurrentPassage() {
   const history = useGameState((state) => state.history);
   const historyIndex = useGameState((state) => state.historyIndex);
-  return history[historyIndex];
+  return history[historyIndex].passage;
 }
 
 export function useGameTitle() {
