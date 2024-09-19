@@ -10,10 +10,10 @@ interface Props {
 export function BaseLayout({ Sidebar = BaseSidebar, StoryOutlet = BaseStoryOutlet }: Props) {
   return (
     <div className="flex w-full h-full">
-      <div className="w-52">
+      <div className="w-72 flex">
         <Sidebar />
       </div>
-      <main className="flex-1 p-1">
+      <main className="flex-1 p-4">
         <StoryOutlet />
       </main>
     </div>

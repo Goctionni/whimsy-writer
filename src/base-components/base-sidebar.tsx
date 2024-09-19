@@ -11,7 +11,7 @@ export function BaseSidebar() {
   const canGoForwards = useCanGoForwards();
 
   return (
-    <div className="p-1">
+    <div className="p-4 bg-slate-900">
       <h1 className="text-3xl text-center mb-4">{title}</h1>
       <div className="flex justify-between">
         <button className="ww-btn" disabled={!canGoBack} onClick={goBack}>

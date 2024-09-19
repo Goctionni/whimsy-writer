@@ -7,11 +7,14 @@
 
 ## Todo
 
-Link onclick
-Variables
-Set By Path(?)
 Link Props
 Save / Load
 Session State
 input binding
 key-reference
+
+---
+
+look into live typegen, how does tanner do it? apparently vite plugin, dont really like
+pass errors to the game in the vite plugin
+duplicate passage name = error

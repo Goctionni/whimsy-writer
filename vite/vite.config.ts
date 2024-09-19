@@ -4,11 +4,11 @@ import { cwd } from 'process';
 import { resolve } from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
-import { passageListPlugin } from './passage-list-plugin';
+import { passageListPlugin } from './vite-plugin-passage-list';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [passageListPlugin('src/passages/**/*.tsx'), react()],
+  plugins: [passageListPlugin('src/passages'), react()],
   root: 'src',
   publicDir: '../public',
   resolve: {

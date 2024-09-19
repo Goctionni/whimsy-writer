@@ -18,6 +18,10 @@
     @apply px-2 py-1 rounded-md bg-sky-600 text-white;
   }
 
+  .ww-btn + .ww-btn {
+    @apply ml-2;
+  }
+
   .ww-btn[disabled] {
     @apply saturate-0;
   }

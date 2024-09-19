@@ -1,10 +1,8 @@
 import { Link } from '../base-components/link';
 import { useVariables } from '../store-utils/var-utils';
-import { End } from './end';
 
 export function Middle() {
   const $var = useVariables();
-  Object.assign(window, { $var });
 
   function scorePoint() {
     $var.score += 1;
@@ -19,7 +17,21 @@ export function Middle() {
           +1
         </button>
       </p>
-      <Link to={End}>Continue</Link>
+      <Link to="End">Continue</Link>
+      <Link to="WithMarkdown">Continue with pzaz</Link>
     </>
   );
 }
+
+export const NamedExpression = () => 'bla';
+
+const NamedExpression2 = () => 'bla';
+// const NamedExpression3 = () => 'bla';
+
+export { NamedExpression2 };
+
+export default function NamedFunction() {
+  return '';
+}
+
+// export default NamedFunction;
