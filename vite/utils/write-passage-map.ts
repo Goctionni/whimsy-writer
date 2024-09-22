@@ -133,7 +133,7 @@ function generatePassageMapFileContent({ passageNames, duplicates }: ReturnType<
     .join('\n');
 }
 
-let currentFileContents = readFileSync(generatedMapFilePath, 'utf-8');
+let currentFileContents = existsSync(generatedMapFilePath) ? readFileSync(generatedMapFilePath, 'utf-8') : '';
 function updatePassageMapFile() {
   const passageNames = getPassageNames();
 

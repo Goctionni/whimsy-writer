@@ -3,10 +3,11 @@
 Link Props
 Save / Load
 Session State
-input binding
+<input> + $var binding
 key-reference
 
 ---
 
 Duplicate passage name = error
 Display duplicate passage errors
+Save, Load, SessionStorage
