@@ -1,3 +1,3 @@
-import { ComponentType } from 'react';
+import { FunctionComponent } from 'react';
 
-export type Passage<T = unknown> = ComponentType<T>;
+export type Passage<T = unknown> = FunctionComponent<T>;

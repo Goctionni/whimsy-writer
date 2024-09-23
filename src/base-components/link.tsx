@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
-import { useGotoPassage } from '../store-utils/store-utils';
-import { getPassage } from '../__generated/passage-map';
+import { getPassage, useGotoPassage } from '../store-utils/store-utils';
 
 interface Props {
   to?: PassageName;

@@ -1,5 +1,8 @@
-import { useGameState } from '../init';
-import { useCanGoBack, useCanGoForwards } from '../store-utils/store-utils';
+import { useState } from 'react';
+import { useCanGoBack, useCanGoForwards, useRestartGame } from '../store-utils/store-utils';
+import { FaChevronLeft, FaChevronRight, FaSave, FaUndo } from 'react-icons/fa';
+import { LoadSaveDialog } from './load-save-dialog';
+import { useGameState } from '../store-utils/state-store';
 
 export function BaseSidebar() {
   const { title, goBack, goForwards } = useGameState((state) => ({
@@ -9,18 +12,32 @@ export function BaseSidebar() {
   }));
   const canGoBack = useCanGoBack();
   const canGoForwards = useCanGoForwards();
+  const restartGame = useRestartGame();
+  const [showLoadSaveDialog, setShowLoadSaveDialog] = useState(false);
 
   return (
-    <div className="p-4 bg-slate-900">
-      <h1 className="text-3xl text-center mb-4">{title}</h1>
-      <div className="flex justify-between">
-        <button className="ww-btn" disabled={!canGoBack} onClick={goBack}>
-          Back
-        </button>
-        <button className="ww-btn" disabled={!canGoForwards} onClick={goForwards}>
-          Forwards
+    <>
+      <div className="p-4 bg-slate-900">
+        <h1 className="text-3xl text-center mb-4">{title}</h1>
+        <div className="flex justify-between items-stretch gap-2">
+          <button className="ww-btn" disabled={!canGoBack} onClick={goBack}>
+            <FaChevronLeft size={24} />
+          </button>
+          <button
+            className="ww-btn flex flex-1 items-center justify-center gap-1"
+            onClick={() => setShowLoadSaveDialog(true)}
+          >
+            <FaSave className="mt-0.5" /> Save / Load
+          </button>
+          <button className="ww-btn" disabled={!canGoForwards} onClick={goForwards}>
+            <FaChevronRight size={24} />
+          </button>
+        </div>
+        <button className="ww-btn-outline mt-4" onClick={restartGame}>
+          <FaUndo className="mr-2" /> Restart
         </button>
       </div>
-    </div>
+      <LoadSaveDialog open={showLoadSaveDialog} close={() => setShowLoadSaveDialog(false)} />
+    </>
   );
 }

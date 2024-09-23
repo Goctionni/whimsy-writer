@@ -17,21 +17,11 @@ export function Middle() {
           +1
         </button>
       </p>
-      <Link to="End">Continue</Link>
-      <Link to="WithMarkdown">Continue with pzaz</Link>
+      <div className="flex gap-2">
+        <Link to="End">Continue</Link>
+        <Link to="Middle">Walk in a circle</Link>
+        <Link to="WithMarkdown">Continue with pzaz</Link>
+      </div>
     </>
   );
 }
-
-export const NamedExpression = () => 'bla';
-
-const NamedExpression2 = () => 'bla';
-// const NamedExpression3 = () => 'bla';
-
-export { NamedExpression2 };
-
-export default function NamedFunction() {
-  return '';
-}
-
-// export default NamedFunction;
