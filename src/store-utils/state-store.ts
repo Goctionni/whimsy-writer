@@ -12,11 +12,11 @@ function saveStateToSessionStore(
   const { title, historyIndex, variables, variableChanges } = state;
   const history = state.history.map((item) => ({ ...item, passage: getPassageName(item.passage) }));
   const json = JSON.stringify({ history, historyIndex, variables, variableChanges });
-  localStorage.setItem(`ww-session-${title}`, json);
+  sessionStorage.setItem(`ww-session-${title}`, json);
 }
 
 function deleteStateFromSessionStore(title: string) {
-  localStorage.removeItem(`ww-session-${title}`);
+  sessionStorage.removeItem(`ww-session-${title}`);
 }
 
 function applyChange(
@@ -101,12 +101,12 @@ export function setupGameStore(options: SetupOptions): UseBoundStore<StoreApi<Ga
           passage,
           variableChanges: [...state.variableChanges],
         };
-        const newHistory = [...state.history.slice(Math.max(0, newIndex - 20), newIndex), newHistoryItem];
+        const newHistory = [...state.history.slice(Math.max(0, newIndex - 19), newIndex), newHistoryItem];
         saveStateToSessionStore(
           {
             title: state.title!,
             history: newHistory,
-            historyIndex: newIndex,
+            historyIndex: Math.min(newHistory.length - 1, newIndex),
             variableChanges: [],
             variables: state.variables,
           },
@@ -117,7 +117,7 @@ export function setupGameStore(options: SetupOptions): UseBoundStore<StoreApi<Ga
         );
         return {
           history: newHistory,
-          historyIndex: newIndex,
+          historyIndex: Math.min(newHistory.length - 1, newIndex),
           variableChanges: [],
         };
       }),
@@ -142,7 +142,7 @@ export function useTryLoadSessionSave() {
   const getPassage = useGetPassage();
 
   return useCallback(() => {
-    const sessionSave = localStorage.getItem(`ww-session-${title}`);
+    const sessionSave = sessionStorage.getItem(`ww-session-${title}`);
 
     if (sessionSave) {
       const raw: SaveDataRaw = JSON.parse(sessionSave);
