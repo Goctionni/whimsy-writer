@@ -1,21 +1,18 @@
-import { Start } from '@passage/start';
+import { CoDStart } from '@passage/CoDStart';
 import { SetupOptions } from './store-utils/types';
+import { passageMap } from './__generated/passage-map';
 
 export function getGameSetupOptions(): SetupOptions {
   return {
-    title: 'My epic adventure',
-    openingPassage: Start,
+    title: 'Cloak of Darkness',
+    openingPassage: CoDStart,
+    passageMap,
     variables: {
-      score: 0,
-      player: {
-        age: 0,
-        inventory: [
-          {
-            id: 1,
-            qty: 0,
-          },
-        ],
-      },
+      barvisits: 0,
+      cloakroomVisits: 0,
+      foyerVisits: 0,
+      cloaked: true,
+      darkness: 0,
     },
   };
 }

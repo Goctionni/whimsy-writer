@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { useCurrentPassage } from '../store-utils/store-utils';
 
 export function BaseStoryOutlet() {
@@ -6,7 +7,9 @@ export function BaseStoryOutlet() {
 
   return (
     <div className="prose prose-invert">
-      <CurrentPassage />
+      <Suspense>
+        <CurrentPassage />
+      </Suspense>
     </div>
   );
 }

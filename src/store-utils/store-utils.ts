@@ -1,14 +1,11 @@
 import { useCallback, useMemo } from 'react';
-import { passageMap } from '../__generated/passage-map';
 import { SaveDataParsed, SaveDataRaw } from './types';
 import { create } from 'zustand';
 import { useGameState } from './state-store';
 import { Passage } from '../base-components/types';
 
 export function useCurrentPassage() {
-  const history = useGameState((state) => state.history);
-  const historyIndex = useGameState((state) => state.historyIndex);
-  return history[historyIndex].passage;
+  return useGameState((state) => state.history[state.historyIndex].passage);
 }
 
 export function useGameTitle() {
@@ -55,6 +52,7 @@ const useSavesUpdatedStore = create<{
 }));
 
 export function useSaveGame() {
+  const getPassageName = useGetPassageName();
   const triggerUpdate = useSavesUpdatedStore((state) => state.triggerUpdate);
   const { title, history, historyIndex, variables, variableChanges } = useGameState((state) => ({
     title: state.title,
@@ -87,6 +85,7 @@ export function useRemoveSavedGame() {
 
 export function useLoadGame() {
   const { title, load } = useGameState((state) => ({ load: state.load, title: state.title }));
+  const getPassage = useGetPassage();
   return useCallback(
     (name: string) => {
       const json = localStorage.getItem(`ww-save-${title}-${name}`);
@@ -102,7 +101,7 @@ export function useLoadGame() {
       };
       load(parsed);
     },
-    [load, title],
+    [getPassage, load, title],
   );
 }
 
@@ -122,17 +121,33 @@ export function useRestartGame() {
   return useGameState((state) => state.restart);
 }
 
-export function getPassage(name: string): Passage | null {
-  if (name in passageMap) {
-    return passageMap[name as keyof typeof passageMap];
-  }
-  return null;
+export function usePassageMap() {
+  return useGameState((state) => state.passageMap);
 }
 
-export function getPassageName(passage: Passage): string | null {
-  return (
-    (Object.keys(passageMap) as Array<keyof typeof passageMap>).find(
-      (passageName) => passageMap[passageName] === passage,
-    ) ?? null
+export function useGetPassage() {
+  const passageMap = usePassageMap();
+  return useCallback(
+    (name: string): Passage | null => {
+      if (name in passageMap) {
+        return passageMap[name as keyof typeof passageMap];
+      }
+      return null;
+    },
+    [passageMap],
+  );
+}
+
+export function useGetPassageName() {
+  const passageMap = usePassageMap();
+  return useCallback(
+    (passage: Passage) => {
+      return (
+        (Object.keys(passageMap) as Array<keyof typeof passageMap>).find(
+          (passageName) => passageMap[passageName] === passage,
+        ) ?? null
+      );
+    },
+    [passageMap],
   );
 }
