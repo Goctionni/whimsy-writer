@@ -1,13 +1,8 @@
-import { FunctionComponent } from 'react';
-
-// [Token] Imports
-
-type Passage = FunctionComponent<unknown>;
-type PassageMap = Record<string, Passage>;
+import { lazy } from 'react';
 
 export const passageMap = {
   // [Token] PassageMap Lines
-} as const satisfies PassageMap;
+} as const;
 
 // [Token] Passage Map Errors
 

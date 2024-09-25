@@ -1,13 +1,15 @@
 import { ReactNode } from 'react';
-import { getPassage, useGotoPassage } from '../store-utils/store-utils';
+import { useGetPassage, useGotoPassage } from '../store-utils/store-utils';
 
 interface Props {
   to?: PassageName;
   $to?: string; // intended for `BarStage${$var.stage}` type passage name references
   onClick?: (e: MouseEvent) => unknown;
   children: ReactNode;
+  textLink?: boolean;
 }
-export function Link({ to, $to, children, onClick }: Props) {
+export function Link({ to, $to, children, onClick, textLink }: Props) {
+  const getPassage = useGetPassage();
   const gotoPassage = useGotoPassage();
 
   function clickHandler(e: React.MouseEvent) {
@@ -22,7 +24,7 @@ export function Link({ to, $to, children, onClick }: Props) {
     }
   }
   return (
-    <button className="ww-btn" onClick={clickHandler} type="button">
+    <button className={textLink ? 'ww-link-text' : 'ww-btn'} onClick={clickHandler} type="button">
       {children}
     </button>
   );

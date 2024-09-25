@@ -8,6 +8,7 @@ export interface HistoryItem {
 export interface SetupOptions {
   title: string;
   openingPassage: Passage;
+  passageMap: PassageMap;
   variables: Variables;
 }
 
@@ -19,6 +20,7 @@ export interface GameStateStore {
   historyIndex: number;
   variables: Variables;
   variableChanges: VariableMutation[];
+  passageMap: PassageMap;
   goBack: () => void;
   goForwards: () => void;
   gotoPassage: (passage: Passage) => void;

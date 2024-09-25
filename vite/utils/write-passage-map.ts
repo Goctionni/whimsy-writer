@@ -80,6 +80,24 @@ function getPassageNames() {
   return { passageNames, duplicates };
 }
 
+function generateLazyImports(path: string, excludeNames: string[] = []) {
+  const lazyImportLines: string[] = [];
+
+  const fileExports = passageMap.get(path);
+  if (!fileExports) return lazyImportLines;
+
+  const entries = Object.entries(fileExports).filter(([, name]) => !excludeNames.includes(name));
+  if (entries.length === 0) return lazyImportLines;
+
+  const importPath = path.replace(/\\/g, '/').replace(/^src\//, '../');
+
+  for (const [key, value] of entries) {
+    lazyImportLines.push(`  ${value}: lazy(() => import('${importPath}').then(module => ({default: module.${key}}))),`);
+  }
+
+  return lazyImportLines;
+}
+
 function generateImportLine(path: string, excludeNames: string[] = []) {
   const fileExports = passageMap.get(path);
   if (!fileExports) return null;
@@ -109,21 +127,29 @@ function generateImportLine(path: string, excludeNames: string[] = []) {
 const template = readFileSync(resolve(cwd(), 'vite', 'utils', 'template', 'passage-map-template.ts'), 'utf-8');
 
 function generatePassageMapFileContent({ passageNames, duplicates }: ReturnType<typeof getPassageNames>) {
-  const importLines = [...passageMap.keys()].map((filePath) =>
-    generateImportLine(
-      filePath,
-      duplicates.map((item) => item.passageName),
-    ),
-  );
+  // const importLines = [...passageMap.keys()].map((filePath) =>
+  //   generateImportLine(
+  //     filePath,
+  //     duplicates.map((item) => item.passageName),
+  //   ),
+  // );
+  const lazyImportLines = [...passageMap.keys()]
+    .map((filePath) =>
+      generateLazyImports(
+        filePath,
+        duplicates.map((item) => item.passageName),
+      ),
+    )
+    .flat();
 
   return template
     .split('\n')
     .map((line) => {
-      if (line.includes('// [Token] Imports')) {
-        return importLines.join('\n');
-      }
+      // if (line.includes('// [Token] Imports')) {
+      //   return importLines.join('\n');
+      // }
       if (line.includes('// [Token] PassageMap Lines')) {
-        return passageNames.map((passageName) => `  ${passageName},`).join('\n');
+        return lazyImportLines.join('\n');
       }
       if (line.includes('// [Token] Passage Map Errors')) {
         return `export const passageMapDuplicates = ${JSON.stringify(duplicates)} as const`;
@@ -144,7 +170,9 @@ function updatePassageMapFile() {
     generatedTypesFilePath,
     [
       'declare global {',
+      `  type Passage = FunctionComponent<unknown>;`,
       `  type PassageName = ${passageNames.passageNames.map((str) => `'${str}'`).join(' | ')};`,
+      `  type PassageMap = Record<PassageName, Passage>;`,
       '}',
       'export {};',
     ].join('\n'),
