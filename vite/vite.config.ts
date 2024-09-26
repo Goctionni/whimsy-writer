@@ -9,6 +9,7 @@ import { passageListPlugin } from './vite-plugin-passage-list';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [passageListPlugin('src/passages'), react()],
+  base: './',
   root: 'src',
   build: {
     outDir: '../dist',
