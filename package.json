@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite serve -c ./vite/vite.config.ts",
-    "build": "tsc -b && vite build",
+    "build": "npm run update-passages && tsc -b && vite build -c ./vite/vite.config.ts",
     "lint": "eslint .",
     "update-passages": "npx tsx ./vite/update-passages.ts",
     "watch-passages": "npx tsx ./vite/watch-passages.ts",
