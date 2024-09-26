@@ -5,13 +5,15 @@ import { resolve } from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import { passageListPlugin } from './vite-plugin-passage-list';
+import { viteSingleFile } from 'vite-plugin-singlefile';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [passageListPlugin('src/passages'), react()],
+export default defineConfig(({ command }) => ({
+  plugins: [passageListPlugin('src/passages'), react(), ...(command === 'serve' ? [] : [viteSingleFile()])],
   base: './',
   root: 'src',
   build: {
+    emptyOutDir: true,
     outDir: '../dist',
   },
   publicDir: '../public',
@@ -27,4 +29,4 @@ export default defineConfig({
       plugins: [tailwindcss({ config: 'vite/tailwind.config.ts' }), autoprefixer()],
     },
   },
-});
+}));
