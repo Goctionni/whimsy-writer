@@ -98,41 +98,9 @@ function generateLazyImports(path: string, excludeNames: string[] = []) {
   return lazyImportLines;
 }
 
-function generateImportLine(path: string, excludeNames: string[] = []) {
-  const fileExports = passageMap.get(path);
-  if (!fileExports) return null;
-
-  const entries = Object.entries(fileExports).filter(([, name]) => !excludeNames.includes(name));
-  if (entries.length === 0) return null;
-
-  const importPath = path.replace(/\\/g, '/').replace(/^src\//, '../');
-
-  if ('default' in fileExports && entries.length === 1) {
-    return `import ${fileExports.default} from '${importPath}';`;
-  }
-
-  const nameImports = entries
-    .filter(([key]) => key !== 'default')
-    .map(([key, value]) => {
-      if (key === value) return key;
-      return `${key} as ${value}`;
-    });
-
-  if ('default' in fileExports) {
-    return `import ${fileExports.default}, { ${nameImports.join(', ')} } from '${importPath}';`;
-  }
-  return `import { ${nameImports.join(', ')} } from '${importPath}';`;
-}
-
 const template = readFileSync(resolve(cwd(), 'vite', 'utils', 'template', 'passage-map-template.ts'), 'utf-8');
 
-function generatePassageMapFileContent({ passageNames, duplicates }: ReturnType<typeof getPassageNames>) {
-  // const importLines = [...passageMap.keys()].map((filePath) =>
-  //   generateImportLine(
-  //     filePath,
-  //     duplicates.map((item) => item.passageName),
-  //   ),
-  // );
+function generatePassageMapFileContent({ duplicates }: ReturnType<typeof getPassageNames>) {
   const lazyImportLines = [...passageMap.keys()]
     .map((filePath) =>
       generateLazyImports(
@@ -144,10 +112,8 @@ function generatePassageMapFileContent({ passageNames, duplicates }: ReturnType<
 
   return template
     .split('\n')
+    .filter((line) => line !== '// @ts-nocheck')
     .map((line) => {
-      // if (line.includes('// [Token] Imports')) {
-      //   return importLines.join('\n');
-      // }
       if (line.includes('// [Token] PassageMap Lines')) {
         return lazyImportLines.join('\n');
       }
