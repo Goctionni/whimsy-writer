@@ -4,20 +4,11 @@ import { passageMap } from './__generated/passage-map';
 
 export function getGameSetupOptions(): SetupOptions {
   return {
-    title: 'My epic adventure',
+    title: 'Hello World',
     openingPassage: Start,
     passageMap,
     variables: {
       score: 0,
-      player: {
-        age: 0,
-        inventory: [
-          {
-            id: 1,
-            qty: 0,
-          },
-        ],
-      },
     },
   };
 }
