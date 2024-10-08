@@ -1,12 +1,9 @@
 declare global {
   interface Variables {
-    player: {
-      age: number;
-      inventory: Array<{
-        id: number;
-        qty: number;
-      }>;
-    };
-    score: number;
+    darkness: number;
+    cloaked: boolean;
+    barvisits: number;
+    cloakroomVisits: number;
+    foyerVisits: number;
   }
 }
