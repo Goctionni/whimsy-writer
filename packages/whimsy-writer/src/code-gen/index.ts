@@ -30,7 +30,7 @@ export function createCodeGen(passageRoot: string, generatedRoot: string) {
     if (typeDefs !== currentFileContents['type-defs']) {
       writeFileSync(filePaths['type-defs'], typeDefs, 'utf-8');
     }
-    const mapContent = generatePassageMap(passageMap, duplicateNameErrors);
+    const mapContent = generatePassageMap(passageRoot, passageMap, duplicateNameErrors);
     if (mapContent !== currentFileContents['passage-map']) {
       writeFileSync(filePaths['passage-map'], mapContent, 'utf-8');
     }

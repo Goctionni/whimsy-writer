@@ -1,22 +1,22 @@
-import { create, StoreApi, UseBoundStore } from 'zustand';
+import { createStore, useStore, StoreApi } from 'zustand';
 import { GameStateStore, HistoryItem, SaveDataParsed, SaveDataRaw, SetupOptions, VariableMutation } from './types';
 import { createContext, useCallback, useContext } from 'react';
 import { useGetPassage } from './store-utils';
+import { useShallow } from 'zustand/shallow';
 
-export const WhimsyStoreContext = createContext<null | UseBoundStore<StoreApi<GameStateStore>>>(null);
-
-type UseStore = UseBoundStore<StoreApi<GameStateStore>>;
-export const useGetGameState = (): UseStore => {
-  const useStore = useContext(WhimsyStoreContext);
-  if (!useStore) throw new Error('Whimsy Store not initialized');
-  return useStore;
-};
+export const WhimsyStoreContext = createContext<null | StoreApi<GameStateStore>>(null);
 
 export const useGameState = <U>(selector: (state: GameStateStore) => U): U => {
-  return useGetGameState()(selector);
+  const store = useContext(WhimsyStoreContext);
+  if (!store) throw new Error('Whimsy Store not initialized');
+  return useStore(store, useCallback(selector, []));
 };
 
-export const useSetGameState = (): UseStore['setState'] => useGetGameState().setState;
+export const useSetGameState = () => {
+  const store = useContext(WhimsyStoreContext);
+  if (!store) throw new Error('Whimsy Store not initialized');
+  return store.setState;
+};
 
 function saveStateToSessionStore(
   state: SaveDataParsed & { title: string },
@@ -65,9 +65,9 @@ function applyChanges<T>(variables: T, direction: 'backwards' | 'forwards', chan
   return orderedChanges.reduce((vars, change) => applyChange(vars, direction, change) as T, variables);
 }
 
-export function setupGameStore(getOptions: () => SetupOptions): UseBoundStore<StoreApi<GameStateStore>> {
+export function useSetupGameStore(getOptions: () => SetupOptions): StoreApi<GameStateStore> {
   const options = getOptions();
-  const store = create<GameStateStore>((set) => ({
+  return createStore<GameStateStore>((set) => ({
     title: options.title,
     passageMap: options.passageMap,
     history: [{ passage: options.openingPassage, variableChanges: [] }],
@@ -147,12 +147,10 @@ export function setupGameStore(getOptions: () => SetupOptions): UseBoundStore<St
       });
     },
   }));
-
-  return store;
 }
 
 export function useTryLoadSessionSave() {
-  const { title, load } = useGameState((state) => ({ title: state.title, load: state.load }));
+  const { title, load } = useGameState(useShallow((state) => ({ title: state.title, load: state.load })));
   const getPassage = useGetPassage();
 
   return useCallback(() => {

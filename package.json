@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "package-version-check": "npm run package-version-check -w repo-utils "
+    "package-version-check": "npm run package-version-check -w repo-utils",
+    "depcheck": "npm run depcheck -ws --if-present",
+    "build-lib": "npm run build -w whimsy-writer",
+    "dev": "npm run dev -w"
   },
   "workspaces": [
     "packages/*",

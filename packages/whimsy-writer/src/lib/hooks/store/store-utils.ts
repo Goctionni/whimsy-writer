@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { SaveDataParsed, SaveDataRaw } from './types';
 import { create } from 'zustand';
 import { useGameState } from './state-store';
+import { useShallow } from 'zustand/shallow';
 
 export function useCurrentPassage() {
   return useGameState((state) => state.history[state.historyIndex].passage);
@@ -43,13 +44,19 @@ const useSavesUpdatedStore = create<{
 export function useSaveGame() {
   const getPassageName = useGetPassageName();
   const triggerUpdate = useSavesUpdatedStore((state) => state.triggerUpdate);
-  const { title, history, historyIndex, variables, variableChanges } = useGameState((state) => ({
-    title: state.title,
-    history: state.history.map((item) => ({ ...item, passage: getPassageName(item.passage) })),
-    historyIndex: state.historyIndex,
-    variables: state.variables,
-    variableChanges: state.variableChanges,
-  }));
+  const { title, historyRaw, historyIndex, variables, variableChanges } = useGameState(
+    useShallow((state) => ({
+      title: state.title,
+      historyRaw: state.history,
+      historyIndex: state.historyIndex,
+      variables: state.variables,
+      variableChanges: state.variableChanges,
+    })),
+  );
+  const history = useMemo(
+    () => historyRaw.map((item) => ({ ...item, passage: getPassageName(item.passage) })),
+    [historyRaw],
+  );
   return useCallback(
     (name: string) => {
       const json = JSON.stringify({ history, historyIndex, variables, variableChanges });
@@ -73,7 +80,7 @@ export function useRemoveSavedGame() {
 }
 
 export function useLoadGame() {
-  const { title, load } = useGameState((state) => ({ load: state.load, title: state.title }));
+  const { title, load } = useGameState(useShallow((state) => ({ load: state.load, title: state.title })));
   const getPassage = useGetPassage();
   return useCallback(
     (name: string) => {

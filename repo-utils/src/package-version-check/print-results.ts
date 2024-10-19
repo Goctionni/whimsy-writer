@@ -1,15 +1,9 @@
 import chalk from 'chalk';
 import { Issue, Version } from './types';
+import stripAnsi from 'strip-ansi';
 
 function length(str: string) {
-  // red, green
-  const remove: string[] = [];
-  remove.push(...chalk.red('TEXT').split('TEXT').filter(Boolean));
-  remove.push(...chalk.green('TEXT').split('TEXT').filter(Boolean));
-  for (const token of remove) {
-    str = str.split(token).join('');
-  }
-  return str.length;
+  return stripAnsi(str).length;
 }
 
 function formatVersion(version: Version, isOld?: boolean, isNew?: boolean): string {

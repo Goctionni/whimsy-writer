@@ -3,13 +3,16 @@ import { useCanGoBack, useCanGoForwards, useRestartGame } from '../hooks/store/s
 import { FaChevronLeft, FaChevronRight, FaSave, FaUndo } from 'react-icons/fa';
 import { useGameState } from '../hooks/store/state-store';
 import { BaseLoadSaveDialog } from './base-load-save-dialog';
+import { useShallow } from 'zustand/shallow';
 
 export function BaseSidebar() {
-  const { title, goBack, goForwards } = useGameState((state) => ({
-    title: state.title,
-    goBack: state.goBack,
-    goForwards: state.goForwards,
-  }));
+  const { title, goBack, goForwards } = useGameState(
+    useShallow((state) => ({
+      title: state.title,
+      goBack: state.goBack,
+      goForwards: state.goForwards,
+    })),
+  );
   const canGoBack = useCanGoBack();
   const canGoForwards = useCanGoForwards();
   const restartGame = useRestartGame();

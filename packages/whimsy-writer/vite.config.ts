@@ -28,6 +28,10 @@ export default defineConfig({
       },
       formats: ['es'],
     },
+    sourcemap: true,
+    terserOptions: {
+      keep_fnames: true,
+    },
     rollupOptions: {
       external: [
         'react',

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { WhimsyStoreContext, setupGameStore } from '../hooks/store/state-store';
+import { WhimsyStoreContext, useSetupGameStore } from '../hooks/store/state-store';
 import { SetupOptions } from '../hooks/store/types';
 
 interface WhimsyAppProps {
@@ -8,6 +8,6 @@ interface WhimsyAppProps {
 }
 
 export function WhimsyApp({ initialStateCreator, children }: WhimsyAppProps) {
-  const store = setupGameStore(initialStateCreator);
+  const store = useSetupGameStore(initialStateCreator);
   return <WhimsyStoreContext.Provider value={store}>{children}</WhimsyStoreContext.Provider>;
 }
