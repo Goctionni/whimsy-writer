@@ -1,5 +1,5 @@
 # Generates
-src/__generated/*
+__generated
 
 # Logs
 logs

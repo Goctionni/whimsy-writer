@@ -4,7 +4,7 @@ import { cwd } from 'process';
 import { resolve } from 'path';
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
-import { passageListPlugin } from 'whimsy-writer/src/vite-plugin';
+import { passageListPlugin } from 'whimsy-writer/vite-plugin';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 
 // https://vitejs.dev/config/

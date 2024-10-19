@@ -1,5 +1,4 @@
-import { Link } from '../base-components/link';
-import { useVariables } from '../store-utils/var-utils';
+import { Link, useVariables } from 'whimsy-writer';
 
 export function Middle() {
   const $var = useVariables();
@@ -20,7 +19,6 @@ export function Middle() {
       <div className="flex gap-2">
         <Link to="End">Continue</Link>
         <Link to="Middle">Walk in a circle</Link>
-        <Link to="WithMarkdown">Continue with pzaz</Link>
       </div>
     </>
   );

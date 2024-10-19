@@ -1,4 +1,4 @@
-import { useVariables } from '../store-utils/var-utils';
+import { useVariables } from 'whimsy-writer';
 
 export function End() {
   const $var = useVariables();
