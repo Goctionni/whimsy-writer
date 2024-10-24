@@ -55,7 +55,7 @@ export function useSaveGame() {
   );
   const history = useMemo(
     () => historyRaw.map((item) => ({ ...item, passage: getPassageName(item.passage) })),
-    [historyRaw],
+    [historyRaw, getPassageName],
   );
   return useCallback(
     (name: string) => {

@@ -1,4 +1,4 @@
 import tseslint from 'typescript-eslint';
 import baseConfig from 'eslint-config-base';
 
-export default tseslint.config({ extends: [baseConfig] });
+export default tseslint.config({ ignores: ['dist'] }, { extends: baseConfig });

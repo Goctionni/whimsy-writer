@@ -7,14 +7,13 @@
     "package-version-check": "npm run package-version-check -w repo-utils",
     "depcheck": "npm run depcheck -ws --if-present",
     "build-lib": "npm run build -w whimsy-writer",
-    "dev": "npm run dev -w"
+    "dev": "npm run dev -w",
+    "lint": "npm run lint -ws --if-present",
+    "typecheck": "npm run typecheck -ws --if-present"
   },
   "workspaces": [
     "packages/*",
     "examples/*",
     "repo-utils"
-  ],
-  "devDependencies": {
-    "turbo": "2.1.3"
-  }
+  ]
 }

@@ -8,8 +8,6 @@ key-reference
 
 $var etc as props
 
-monorepo (maybe using turbo)
-
 // package version check should ignore \* for local workspaces
 
 - ww-library

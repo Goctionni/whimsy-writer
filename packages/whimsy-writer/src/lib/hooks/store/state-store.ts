@@ -9,7 +9,7 @@ export const WhimsyStoreContext = createContext<null | StoreApi<GameStateStore>>
 export const useGameState = <U>(selector: (state: GameStateStore) => U): U => {
   const store = useContext(WhimsyStoreContext);
   if (!store) throw new Error('Whimsy Store not initialized');
-  return useStore(store, useCallback(selector, []));
+  return useStore(store, selector);
 };
 
 export const useSetGameState = () => {

@@ -8,12 +8,12 @@
     "package-version-check": "tsx src/package-version-check"
   },
   "devDependencies": {
-    "depcheck": "1.4.7",
-    "chalk": "5.3.0",
-    "tsx": "4.19.1",
-    "typescript": "5.6.2",
     "@total-typescript/ts-reset": "0.6.1",
+    "chalk": "5.3.0",
+    "depcheck": "1.4.7",
     "strip-ansi": "7.1.0",
+    "tsx": "4.19.1",
+    "typescript": "5.6.3",
     "zod": "3.23.8"
   }
 }

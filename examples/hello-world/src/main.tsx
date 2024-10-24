@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { WhimsyApp, BaseLayout, SetupOptions } from 'whimsy-writer';
 import './__generated/passage-map.ts';
 import './style/base.css';
+import 'whimsy-writer/css';
 import { Start } from '@passage/start.tsx';
 import { passageMap } from './__generated/passage-map.ts';
 
