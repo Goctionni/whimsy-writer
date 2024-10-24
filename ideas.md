@@ -1,0 +1,5 @@
+- utility/widget/plugin library
+- plugins also dev mode stuff
+- whimsy demos
+- contest
+- in dev mode
