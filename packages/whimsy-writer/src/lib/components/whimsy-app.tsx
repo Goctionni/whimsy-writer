@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { WhimsyStoreContext, useSetupGameStore } from '../hooks/store/state-store';
-import { SetupOptions } from '../hooks/store/types';
+import type { SetupOptions } from '../hooks/store/types';
 
 interface WhimsyAppProps {
   initialStateCreator: () => SetupOptions;

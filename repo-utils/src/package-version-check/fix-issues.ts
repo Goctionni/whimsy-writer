@@ -14,7 +14,9 @@ export function fixIssues(repoDependencies: RepoDeps, issues: Issue[]) {
   const fixedRepoDependencies: RepoDeps = {};
 
   for (const issue of canFix) {
-    const targetVersion = Object.values(issue.workspaceVersions).find((item) => item.targetVersion)?.targetVersion;
+    const targetVersion = Object.values(issue.workspaceVersions).find(
+      (item) => item.targetVersion,
+    )?.targetVersion;
     if (!targetVersion) throw new Error('Well that shouldnt have happened');
     const targetVersionStr = formatTargetFunction(targetVersion as NumberedVersion);
 
@@ -35,7 +37,9 @@ export function fixIssues(repoDependencies: RepoDeps, issues: Issue[]) {
       }
     }
   }
-  for (const [workspace, { dependencies, devDependencies }] of Object.entries(fixedRepoDependencies)) {
+  for (const [workspace, { dependencies, devDependencies }] of Object.entries(
+    fixedRepoDependencies,
+  )) {
     writeWorkspaceDependencies(workspace, dependencies, devDependencies);
   }
 

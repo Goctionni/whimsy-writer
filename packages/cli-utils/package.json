@@ -1,0 +1,24 @@
+{
+  "name": "cli-utils",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Creates a whimsy-writer project for you",
+  "license": "MIT",
+  "author": "Goctionni",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "eslint": "9.13.0",
+    "eslint-config-base": "0.0.0",
+    "tsup": "8.3.0",
+    "typescript": "5.6.3",
+    "typescript-eslint": "8.11.0"
+  }
+}

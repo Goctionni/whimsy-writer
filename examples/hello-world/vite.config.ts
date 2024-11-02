@@ -9,7 +9,11 @@ import { viteSingleFile } from 'vite-plugin-singlefile';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => ({
-  plugins: [passageListPlugin('src/passages'), react(), ...(command === 'serve' ? [] : [viteSingleFile()])],
+  plugins: [
+    passageListPlugin('src/passages'),
+    react(),
+    ...(command === 'serve' ? [] : [viteSingleFile()]),
+  ],
   base: './',
   resolve: {
     alias: {

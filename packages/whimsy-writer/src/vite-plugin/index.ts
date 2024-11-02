@@ -1,4 +1,4 @@
-import chokidar from 'chokidar';
+import { watch } from 'chokidar';
 import type { PluginOption } from 'vite';
 import { statSync } from 'fs';
 import { resolve } from 'path';
@@ -16,16 +16,18 @@ export const passageListPlugin = (passagePath?: string, generatedPath?: string):
     name: 'passage-list',
     configureServer({ config }) {
       const passageRoot = passagePath ? resolve(passagePath) : resolve(config.root, 'src/passages');
-      const generatedRoot = generatedPath ? resolve(generatedPath) : resolve(passageRoot, '../__generated');
+      const generatedRoot = generatedPath
+        ? resolve(generatedPath)
+        : resolve(passageRoot, '../__generated');
       const codeGen = createCodeGen(passageRoot, generatedRoot);
-      const watcher = chokidar.watch(passageRoot.replace(/\\/g, '/'), {
+      const watcher = watch(passageRoot.replace(/\\/g, '/'), {
         ignored: ignoreFile,
         persistent: true,
         ignoreInitial: true,
       });
-      watcher.on('change', (filePath) => codeGen.handle('update', filePath));
-      watcher.on('add', (filePath) => codeGen.handle('update', filePath));
-      watcher.on('unlink', (filePath) => codeGen.handle('remove', filePath));
+      watcher.on('change', (filePath: string) => codeGen.handle('update', filePath));
+      watcher.on('add', (filePath: string) => codeGen.handle('update', filePath));
+      watcher.on('unlink', (filePath: string) => codeGen.handle('remove', filePath));
     },
   };
 };

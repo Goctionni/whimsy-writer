@@ -1,0 +1,20 @@
+{
+  "eslint.workingDirectories": [
+    { "pattern": "./packages/*" },
+    { "pattern": "./examples/*" },
+    { "directory": "repo-utils" }
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": false,
+  "editor.rulers": [100],
+  "prettier.prettierPath": "./node_modules/prettier",
+  "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": false,
+  "editor.detectIndentation": false,
+  "editor.indentSize": "tabSize",
+  "editor.tabSize": 2,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

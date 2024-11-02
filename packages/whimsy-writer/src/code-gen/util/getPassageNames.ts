@@ -1,4 +1,4 @@
-import { DuplicateNameError, PassageMap } from '../types';
+import type { DuplicateNameError, PassageMap } from '../types';
 
 export function getPassageNames(passageMap: PassageMap) {
   const nameMap: Record<string, string[]> = {};

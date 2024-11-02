@@ -1,5 +1,13 @@
-import { createStore, useStore, StoreApi } from 'zustand';
-import { GameStateStore, HistoryItem, SaveDataParsed, SaveDataRaw, SetupOptions, VariableMutation } from './types';
+import type { StoreApi } from 'zustand';
+import { createStore, useStore } from 'zustand';
+import type {
+  GameStateStore,
+  HistoryItem,
+  SaveDataParsed,
+  SaveDataRaw,
+  SetupOptions,
+  VariableMutation,
+} from './types';
 import { createContext, useCallback, useContext } from 'react';
 import { useGetPassage } from './store-utils';
 import { useShallow } from 'zustand/shallow';
@@ -23,8 +31,16 @@ function saveStateToSessionStore(
   getPassageName: (passage: Passage) => null | PassageName,
 ) {
   const { title, historyIndex, variables, variableChanges } = state;
-  const history = state.history.map((item) => ({ ...item, passage: getPassageName(item.passage) }));
-  const json = JSON.stringify({ history, historyIndex, variables, variableChanges });
+  const history = state.history.map((item) => ({
+    ...item,
+    passage: getPassageName(item.passage),
+  }));
+  const json = JSON.stringify({
+    history,
+    historyIndex,
+    variables,
+    variableChanges,
+  });
   sessionStorage.setItem(`ww-session-${title}`, json);
 }
 
@@ -45,7 +61,7 @@ function applyChange(
   if (typeof variables !== 'object') return variables;
   if (Array.isArray(variables)) {
     const changeIndex = Number(attr);
-    return variables.map((item, index) => {
+    return variables.map((item: unknown, index) => {
       if (index !== changeIndex) return item;
       return applyChange(item, direction, { path: restPath, before, after });
     });
@@ -60,9 +76,16 @@ function applyChange(
   };
 }
 
-function applyChanges<T>(variables: T, direction: 'backwards' | 'forwards', changes: VariableMutation[]): T {
+function applyChanges<T>(
+  variables: T,
+  direction: 'backwards' | 'forwards',
+  changes: VariableMutation[],
+): T {
   const orderedChanges = direction === 'forwards' ? changes : changes.toReversed();
-  return orderedChanges.reduce((vars, change) => applyChange(vars, direction, change) as T, variables);
+  return orderedChanges.reduce(
+    (vars, change) => applyChange(vars, direction, change) as T,
+    variables,
+  );
 }
 
 export function useSetupGameStore(getOptions: () => SetupOptions): StoreApi<GameStateStore> {
@@ -115,7 +138,10 @@ export function useSetupGameStore(getOptions: () => SetupOptions): StoreApi<Game
           passage,
           variableChanges: [...state.variableChanges],
         };
-        const newHistory = [...state.history.slice(Math.max(0, newIndex - 19), newIndex), newHistoryItem];
+        const newHistory = [
+          ...state.history.slice(Math.max(0, newIndex - 19), newIndex),
+          newHistoryItem,
+        ];
         saveStateToSessionStore(
           {
             title: state.title!,
@@ -150,14 +176,16 @@ export function useSetupGameStore(getOptions: () => SetupOptions): StoreApi<Game
 }
 
 export function useTryLoadSessionSave() {
-  const { title, load } = useGameState(useShallow((state) => ({ title: state.title, load: state.load })));
+  const { title, load } = useGameState(
+    useShallow((state) => ({ title: state.title, load: state.load })),
+  );
   const getPassage = useGetPassage();
 
   return useCallback(() => {
     const sessionSave = sessionStorage.getItem(`ww-session-${title}`);
 
     if (sessionSave) {
-      const raw: SaveDataRaw = JSON.parse(sessionSave);
+      const raw = JSON.parse(sessionSave) as SaveDataRaw;
       if (raw) {
         const parsed: SaveDataParsed = {
           ...raw,

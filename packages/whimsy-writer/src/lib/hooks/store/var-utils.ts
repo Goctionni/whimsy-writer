@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { VariableMutation } from './types';
+import type { VariableMutation } from './types';
 import { GET_RAW_KEY } from './constants';
 import { useGameState, useSetGameState } from './state-store';
 
@@ -14,7 +14,11 @@ import { useGameState, useSetGameState } from './state-store';
 
 type RegisterVariableChange = (newState: unknown, variableMutation: VariableMutation) => void;
 
-function createProxy<T extends object>(data: T, update: RegisterVariableChange, path: Array<string | symbol> = []) {
+function createProxy<T extends object>(
+  data: T,
+  update: RegisterVariableChange,
+  path: Array<string | symbol> = [],
+) {
   const memoizedGet: Record<PropertyKey, unknown> = {};
   const clone = Array.isArray(data) ? data.slice() : { ...data };
 
@@ -62,7 +66,10 @@ function createProxy<T extends object>(data: T, update: RegisterVariableChange, 
   }) as T;
 }
 
-function isNewPathParentOfOld(newPath: Array<string | symbol>, oldPath: Array<string | symbol>): boolean {
+function isNewPathParentOfOld(
+  newPath: Array<string | symbol>,
+  oldPath: Array<string | symbol>,
+): boolean {
   if (newPath.length >= oldPath.length) return false;
   return newPath.every((newItem, i) => newItem === oldPath[i]);
 }
@@ -79,7 +86,9 @@ export function useVariables() {
     return createProxy(vars, (newValue, { path, before, after }) => {
       setState(({ variableChanges }) => {
         // Remove history items if theyre inside an object/array that's being changed
-        const filteredChanges = variableChanges.filter((item) => !isNewPathParentOfOld(path, item.path));
+        const filteredChanges = variableChanges.filter(
+          (item) => !isNewPathParentOfOld(path, item.path),
+        );
         // Check if we have a mutation that updates the same variable
         const identicalPath = variableChanges.find((item) => isNewPathSameAsOld(item.path, path));
         // If not, simply add this mutation

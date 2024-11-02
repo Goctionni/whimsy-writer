@@ -1,19 +1,28 @@
 {
   "name": "whimsy-repo",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
-  "scripts": {
-    "package-version-check": "npm run package-version-check -w repo-utils",
-    "depcheck": "npm run depcheck -ws --if-present",
-    "build-lib": "npm run build -w whimsy-writer",
-    "dev": "npm run dev -w",
-    "lint": "npm run lint -ws --if-present",
-    "typecheck": "npm run typecheck -ws --if-present"
-  },
   "workspaces": [
     "packages/*",
     "examples/*",
     "repo-utils"
-  ]
+  ],
+  "scripts": {
+    "build-create": "npm run build -w create-whimsy",
+    "build-lib": "npm run build -w whimsy-writer",
+    "depcheck": "npm run repo-depcheck -w repo-utils",
+    "dev": "npm run dev -w",
+    "lint": "npm run lint -ws --if-present",
+    "lint:fix": "npm run lint:fix -ws --if-present",
+    "package-version-check": "npm run package-version-check -w repo-utils",
+    "prettier": "prettier . --check",
+    "prettier:fix": "prettier . --write",
+    "typecheck": "npm run typecheck -ws --if-present"
+  },
+  "devDependencies": {
+    "depcheck": "1.4.7",
+    "prettier": "3.3.3",
+    "prettier-plugin-packagejson": "2.5.3"
+  }
 }

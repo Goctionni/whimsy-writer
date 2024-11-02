@@ -1,6 +1,11 @@
-import { useLoadGame, useRemoveSavedGame, useSaveGame, useSaveList } from '../hooks/store/store-utils';
+import {
+  useLoadGame,
+  useRemoveSavedGame,
+  useSaveGame,
+  useSaveList,
+} from '../hooks/store/store-utils';
 import { useState } from 'react';
-import { FaSave, FaTrash, FaFolder, FaEdit, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaFolder, FaSave, FaTimes, FaTrash } from 'react-icons/fa';
 
 interface BaseLoadSaveDialogProps {
   open: boolean;
@@ -50,7 +55,10 @@ export function BaseLoadSaveDialog({ open, close }: BaseLoadSaveDialogProps) {
       <div className="bg-slate-800 p-6 rounded-lg shadow-xl w-96">
         <div className="flex items-center gap-2 mb-4">
           <h2 className="text-2xl flex-1 font-bold text-slate-100">Save / Load Game</h2>
-          <button onClick={handleClose} className="hover:bg-slate-700 text-white font-bold p-2 rounded">
+          <button
+            onClick={handleClose}
+            className="hover:bg-slate-700 text-white font-bold p-2 rounded"
+          >
             <FaTimes size={24} />
           </button>
         </div>
@@ -82,7 +90,11 @@ export function BaseLoadSaveDialog({ open, close }: BaseLoadSaveDialogProps) {
                 >
                   <span className="text-slate-100 flex-grow">{save}</span>
                   <div className="flex gap-1 space-x-2">
-                    <button onClick={() => handleLoad(save)} className="text-sky-500 hover:text-sky-300" title="Load">
+                    <button
+                      onClick={() => handleLoad(save)}
+                      className="text-sky-500 hover:text-sky-300"
+                      title="Load"
+                    >
                       <FaFolder size={20} />
                     </button>
                     <button

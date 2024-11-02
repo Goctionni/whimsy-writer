@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react';
-import { SaveDataParsed, SaveDataRaw } from './types';
+import type { SaveDataParsed, SaveDataRaw } from './types';
 import { create } from 'zustand';
 import { useGameState } from './state-store';
 import { useShallow } from 'zustand/shallow';
@@ -54,12 +54,21 @@ export function useSaveGame() {
     })),
   );
   const history = useMemo(
-    () => historyRaw.map((item) => ({ ...item, passage: getPassageName(item.passage) })),
+    () =>
+      historyRaw.map((item) => ({
+        ...item,
+        passage: getPassageName(item.passage),
+      })),
     [historyRaw, getPassageName],
   );
   return useCallback(
     (name: string) => {
-      const json = JSON.stringify({ history, historyIndex, variables, variableChanges });
+      const json = JSON.stringify({
+        history,
+        historyIndex,
+        variables,
+        variableChanges,
+      });
       localStorage.setItem(`ww-save-${title}-${name}`, json);
       triggerUpdate();
     },
@@ -80,7 +89,9 @@ export function useRemoveSavedGame() {
 }
 
 export function useLoadGame() {
-  const { title, load } = useGameState(useShallow((state) => ({ load: state.load, title: state.title })));
+  const { title, load } = useGameState(
+    useShallow((state) => ({ load: state.load, title: state.title })),
+  );
   const getPassage = useGetPassage();
   return useCallback(
     (name: string) => {

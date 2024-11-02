@@ -1,5 +1,5 @@
 import { globby } from 'globby';
-import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { getFileExports } from './util/getFileExports';
 import { getPassageNames } from './util/getPassageNames';
@@ -46,7 +46,7 @@ export function createCodeGen(passageRoot: string, generatedRoot: string) {
     updateFiles();
   }
 
-  init();
+  void init();
 
   let debounceTimeout: null | NodeJS.Timeout = null;
   function scheduleUpdate() {

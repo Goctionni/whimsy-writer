@@ -21,5 +21,11 @@
     "noFallthroughCasesInSwitch": true,
     "noEmit": true
   },
-  "include": ["src/lib-global.d.ts", "src"]
+  "include": [
+    "src/lib-global.d.ts",
+    "tailwind.config.ts",
+    "postcss.config.ts",
+    "tsup.config.ts",
+    "src"
+  ]
 }

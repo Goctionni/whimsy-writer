@@ -18,7 +18,12 @@ function depShouldBeIn(name: string): Usage['shouldBeIn'] {
   return 'unknown';
 }
 
-function addDeps(depsInfo: DependencyInfo[], repo: string, deps: Record<string, string>, dev: boolean) {
+function addDeps(
+  depsInfo: DependencyInfo[],
+  repo: string,
+  deps: Record<string, string>,
+  dev: boolean,
+) {
   for (const [dep, versionRaw] of Object.entries(deps)) {
     let depInfo = depsInfo.find((item) => item.name === dep);
     if (!depInfo) {

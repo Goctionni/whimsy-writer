@@ -1,8 +1,13 @@
-import { DuplicateNameError, PassageMap } from '../types';
+import type { DuplicateNameError, PassageMap } from '../types';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
-function generateLazyImports(passageRoot: string, passageMap: PassageMap, path: string, excludeNames: string[] = []) {
+function generateLazyImports(
+  passageRoot: string,
+  passageMap: PassageMap,
+  path: string,
+  excludeNames: string[] = [],
+) {
   const lazyImportLines: string[] = [];
 
   const fileExports = passageMap.get(path);
@@ -14,7 +19,9 @@ function generateLazyImports(passageRoot: string, passageMap: PassageMap, path: 
   const importPath = path.replace(/\\/g, '/').replace(passageRoot.replace(/\\/g, '/'), '@passage');
 
   for (const [key, value] of entries) {
-    lazyImportLines.push(`  ${value}: lazy(() => import('${importPath}').then(module => ({default: module.${key}}))),`);
+    lazyImportLines.push(
+      `  ${value}: lazy(() => import('${importPath}').then(module => ({default: module.${key}}))),`,
+    );
   }
 
   return lazyImportLines;
@@ -22,7 +29,7 @@ function generateLazyImports(passageRoot: string, passageMap: PassageMap, path: 
 
 const __dirname = import.meta.dirname;
 const workspaceRoot = __dirname.slice(0, __dirname.lastIndexOf('dist'));
-const templatePath = resolve(workspaceRoot, 'src/code-gen/util/template/passage-map-template.ts');
+const templatePath = resolve(workspaceRoot, 'templates/passage-map-template.ts');
 const template = readFileSync(templatePath, 'utf-8');
 
 export function generatePassageMap(
