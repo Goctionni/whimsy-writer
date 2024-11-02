@@ -1,6 +1,5 @@
 import { Box, Text } from 'ink';
 import type { Dispatch, SetStateAction } from 'react';
-import React from 'react';
 import TextInput from 'ink-text-input';
 
 interface Props {

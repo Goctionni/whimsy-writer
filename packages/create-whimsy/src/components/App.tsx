@@ -1,5 +1,5 @@
-import type { ReactNode} from 'react';
-import React, { useState } from 'react';
+import type { ReactNode } from 'react';
+import { useState } from 'react';
 import { Box, Text } from 'ink';
 import { NameStep } from './NameStep';
 import { DirNameStep } from './DirNameStep';

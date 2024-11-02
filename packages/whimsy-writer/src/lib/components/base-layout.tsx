@@ -1,4 +1,4 @@
-import type { ComponentType} from 'react';
+import type { ComponentType } from 'react';
 import { useEffect, useRef } from 'react';
 import { BaseSidebar } from './base-sidebar';
 import { BaseStoryOutlet } from './base-story-outlet';

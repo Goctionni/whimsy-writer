@@ -1,6 +1,6 @@
 import type { BoxProps, TextProps } from 'ink';
 import { Box, Text } from 'ink';
-import type { ReactElement, ReactNode} from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { Children, useMemo } from 'react';
 import { cwd } from 'process';
 import { resolve } from 'path';

@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import type { SetupOptions} from 'whimsy-writer';
+import type { SetupOptions } from 'whimsy-writer';
 import { BaseLayout, WhimsyApp } from 'whimsy-writer';
 import { passageMap } from './__generated/passage-map.ts';
 import './style/base.css';
