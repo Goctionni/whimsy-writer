@@ -53,14 +53,12 @@ export function useSaveGame() {
       variableChanges: state.variableChanges,
     })),
   );
-  const history = useMemo(
-    () =>
-      historyRaw.map((item) => ({
-        ...item,
-        passage: getPassageName(item.passage),
-      })),
-    [historyRaw, getPassageName],
-  );
+  const history = useMemo(() => {
+    return historyRaw.map((item) => ({
+      ...item,
+      passage: getPassageName(item.passage),
+    }));
+  }, [historyRaw, getPassageName]);
   return useCallback(
     (name: string) => {
       const json = JSON.stringify({

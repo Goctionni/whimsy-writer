@@ -8,6 +8,9 @@ import { Created } from './end-screens/Created';
 import { Aborted } from './end-screens/Aborted';
 import { ErrorMessage } from './end-screens/ErrorMessage';
 
+const steps = ['name', 'dirname', 'confirm'] as const;
+type Step = (typeof steps)[number];
+
 interface Props {
   name: string;
   dirName: string;
@@ -17,20 +20,20 @@ interface Props {
 }
 
 export function App(props: Props) {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<Step>(steps[0]);
   const [name, setName] = useState(props.name);
   const [dirName, setDirName] = useState(props.dirName);
 
   function nextStep() {
-    if (step === 0 && !name) return;
-    if (step === 1 && !dirName) return;
-    if (step === 0 && props.targetIsCwd) return setStep(2);
-    return setStep((cur) => cur + 1);
+    if (step === 'name' && !name) return;
+    if (step === 'dirname' && !dirName) return;
+    if (step === 'name' && props.targetIsCwd) return setStep('confirm');
+    return setStep((cur) => steps[steps.indexOf(cur) + 1]);
   }
 
   function onConfirm(result: boolean | null) {
     if (result === null) return props.exitApp(<Aborted />);
-    if (!result) return setStep(0);
+    if (!result) return setStep('name');
     try {
       props.createProject(name, dirName);
       props.exitApp(<Created path={dirName} targetIsCwd={props.targetIsCwd} />);
@@ -50,15 +53,15 @@ export function App(props: Props) {
         <Text color="gray">-</Text>
         <Text color="cyan">Setting up your whimsy-writer story</Text>
       </Box>
-      <NameStep active={step === 0} name={name} setName={setName} nextStep={nextStep} />
+      <NameStep active={step === 'name'} name={name} setName={setName} nextStep={nextStep} />
       <DirNameStep
-        active={step === 1}
+        active={step === 'dirname'}
         dirName={dirName}
         setDirName={setDirName}
         nextStep={nextStep}
         locked={props.targetIsCwd}
       />
-      {step === 2 && <Confirm onSubmit={onConfirm} />}
+      {step === 'confirm' && <Confirm onSubmit={onConfirm} />}
     </Box>
   );
 }

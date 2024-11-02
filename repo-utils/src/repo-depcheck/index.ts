@@ -7,7 +7,10 @@ const __dirname = import.meta.dirname;
 const __root = resolve(__dirname, '../../..');
 
 const workspaces = Object.keys(
-  JSON.parse(execSync(`npm -ws pkg get name`, { encoding: 'utf-8', cwd: __root })) as string,
+  JSON.parse(execSync(`npm -ws pkg get name`, { encoding: 'utf-8', cwd: __root })) as Record<
+    string,
+    string
+  >,
 );
 
 const errorsIn: string[] = [];

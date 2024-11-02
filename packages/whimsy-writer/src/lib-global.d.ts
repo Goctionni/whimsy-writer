@@ -13,5 +13,3 @@ declare global {
   type Passage = FunctionComponent<unknown>;
   type PassageMap = Record<PassageName, Passage>;
 }
-
-export {};
