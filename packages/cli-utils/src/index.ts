@@ -35,13 +35,14 @@ export function getArg(
       else values.push(argv[i + 1]);
     } else if (
       arg.startsWith(`--${argName}=`) ||
-      (shorthand && arg.startsWith(`--${shorthand}=`))
+      (shorthand && arg.startsWith(`-${shorthand}=`))
     ) {
       const valueStr = arg.slice(arg.indexOf('=') + 1);
       if (boolean) {
-        if (['1', 'true', 'on'].includes(valueStr.toLowerCase())) return true;
-        if (['0', 'false', 'off'].includes(valueStr.toLowerCase())) return false;
-        return valueStr;
+        const normalizedValue = valueStr.toLowerCase().trim();
+        if (['1', 'true', 'on', 'yes'].includes(normalizedValue)) return true;
+        if (['0', 'false', 'off', 'no'].includes(normalizedValue)) return false;
+        throw new Error(`Invalid boolean value: ${valueStr}`);
       } else if (!multiple) {
         return valueStr;
       } else {
