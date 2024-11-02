@@ -35,7 +35,7 @@ export function getArg(
       else values.push(argv[i + 1]);
     } else if (
       arg.startsWith(`--${argName}=`) ||
-      (shorthand && arg.startsWith(`--${shorthand}=`))
+      (shorthand && arg.startsWith(`-${shorthand}=`))
     ) {
       const valueStr = arg.slice(arg.indexOf('=') + 1);
       if (boolean) {
