@@ -1,9 +1,16 @@
 import { execSync, exec } from 'child_process';
 import { stdout, stderr } from 'process';
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 
-const __dirname = import.meta.dirname;
+if (!('__dirname' in globalThis)) {
+  globalThis.require = createRequire(import.meta.url);
+  globalThis.__filename = fileURLToPath(import.meta.url);
+  globalThis.__dirname = dirname(__filename);
+}
+
 const __root = resolve(__dirname, '../../..');
 
 const workspaces = Object.keys(

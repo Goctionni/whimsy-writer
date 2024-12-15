@@ -1,11 +1,18 @@
 import { z } from 'zod';
 
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { execSync } from 'child_process';
 import { RepoDeps } from './types';
 import { env } from 'process';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
 
-const __dirname = import.meta.dirname;
+if (!('__dirname' in globalThis)) {
+  globalThis.require = createRequire(import.meta.url);
+  globalThis.__filename = fileURLToPath(import.meta.url);
+  globalThis.__dirname = dirname(__filename);
+}
+
 const __root = resolve(__dirname, '../../..');
 
 const DepMapDef = z.record(z.string());
