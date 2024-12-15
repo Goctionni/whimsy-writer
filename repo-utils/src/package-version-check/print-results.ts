@@ -42,7 +42,7 @@ export function printResults(issues: Issue[]) {
   const deps = issues.map((issue) => issue.dependency);
   const workspaces = [
     ...new Set(issues.map((issue) => Object.keys(issue.workspaceVersions)).flat()),
-  ].toSorted();
+  ].sort();
   const longestDepName = Math.max(...deps.map((dep) => dep.length));
 
   // Header line
