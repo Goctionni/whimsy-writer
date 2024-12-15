@@ -10,7 +10,8 @@ const [, , ...args] = argv;
 const repoDependencies = readRepositoryDependencies();
 const depsInfo = parseRepoDeps(repoDependencies);
 let issues = depsInfo
-  .toSorted((v1, v2) => v1.name.localeCompare(v2.name))
+  .slice()
+  .sort((v1, v2) => v1.name.localeCompare(v2.name))
   .map((item) => getIssue(item))
   .filter(Boolean);
 

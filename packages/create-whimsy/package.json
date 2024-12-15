@@ -1,0 +1,48 @@
+{
+  "name": "create-whimsy",
+  "version": "1.1.0",
+  "description": "Creates a whimsy-writer project for you",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goctionni/whimsy-writer.git"
+  },
+  "license": "MIT",
+  "author": "Goctionni",
+  "type": "module",
+  "main": "dist/cli.js",
+  "bin": {
+    "create-whimsy": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "__gen_template"
+  ],
+  "scripts": {
+    "build": "tsx script/copy-files && tsup",
+    "cli": "tsx src/index",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepublishOnly": "npm run build",
+    "sync-templates": "tsx script/copy-files",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "chalk": "5.3.0",
+    "ink": "5.0.1",
+    "ink-text-input": "6.0.0",
+    "react": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "cli-utils": "0.0.0",
+    "eslint": "9.13.0",
+    "eslint-config-base": "0.0.0",
+    "tsup": "8.3.0",
+    "tsx": "4.19.1",
+    "typescript": "5.6.3",
+    "typescript-eslint": "8.11.0"
+  },
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  }
+}

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Global install whimsy-writer
+        run: npm i -g whimsy-writer@latest
+
+      - name: Run builds
+        run: npm run build-cli-utils && npm run build-lib && npm run build-create && npm run -w hello-world update-passages
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run Prettier
+        run: npm run prettier
+
+      - name: Run typecheck
+        run: npm run typecheck
+
+      - name: Run Depcheck
+        run: npm run depcheck
+
+      - name: Run Package Version Check
+        run: npm run package-version-check

@@ -36,12 +36,18 @@ export function parseVersion(rawStr: string): Version {
 
   index += major.length + 1;
   const minor = getNumberPart(rawStr.slice(index));
-  if (minor === null || minor === 'x') return { symbol: symbol ?? '=', major: parseInt(major), raw: rawStr };
+  if (minor === null || minor === 'x')
+    return { symbol: symbol ?? '=', major: parseInt(major), raw: rawStr };
 
   index += minor.length + 1;
   const patch = getNumberPart(rawStr.slice(index));
   if (patch === null || patch === 'x')
-    return { symbol: symbol ?? '=', major: parseInt(major), minor: parseInt(minor), raw: rawStr };
+    return {
+      symbol: symbol ?? '=',
+      major: parseInt(major),
+      minor: parseInt(minor),
+      raw: rawStr,
+    };
 
   const rest = rawStr.slice(index + patch.length + 1);
   return {

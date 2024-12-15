@@ -8,7 +8,10 @@ function compareNumberedVersions(v1: NumberedVersion, v2: NumberedVersion): numb
     if (n2 > n1) return 1;
     return -1;
   };
-  const numResult = compareNum(v1.major, v2.major) || compareNum(v1.minor, v2.minor) || compareNum(v1.patch, v2.patch);
+  const numResult =
+    compareNum(v1.major, v2.major) ||
+    compareNum(v1.minor, v2.minor) ||
+    compareNum(v1.patch, v2.patch);
   if (numResult !== 0) return numResult;
   if (v1.rest === v2.rest) return 0;
   if (!v1.rest) return -1;

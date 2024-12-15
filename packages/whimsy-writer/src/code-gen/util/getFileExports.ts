@@ -9,7 +9,10 @@ const traverse: Traverse = (_traverse as unknown as { default: Traverse }).defau
 export function getFileExports(filePath: string) {
   const fileExports: FileExports = {};
   const content = readFileSync(filePath, 'utf-8');
-  const ast = parser.parse(content, { sourceType: 'module', plugins: ['typescript', 'jsx'] });
+  const ast = parser.parse(content, {
+    sourceType: 'module',
+    plugins: ['typescript', 'jsx'],
+  });
 
   traverse(ast, {
     ExportNamedDeclaration({ node: { declaration, specifiers } }) {

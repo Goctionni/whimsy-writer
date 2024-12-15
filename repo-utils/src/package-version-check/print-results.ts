@@ -11,7 +11,11 @@ function formatVersion(version: Version, isOld?: boolean, isNew?: boolean): stri
   if (version.symbol === '*') return chalk.red('*');
   if (version.symbol === 'latest') return chalk.red('*');
   if (version.symbol === '-') {
-    return [formatVersion(version.from, isOld), chalk.red('-'), formatVersion(version.to, isOld)].join(' ');
+    return [
+      formatVersion(version.from, isOld),
+      chalk.red('-'),
+      formatVersion(version.to, isOld),
+    ].join(' ');
   }
   if (version.symbol === '||') {
     return version.options.map((item) => formatVersion(item, isOld)).join(chalk.red(' || '));
@@ -36,7 +40,9 @@ export function printResults(issues: Issue[]) {
   console.log('');
 
   const deps = issues.map((issue) => issue.dependency);
-  const workspaces = [...new Set(issues.map((issue) => Object.keys(issue.workspaceVersions)).flat())].toSorted();
+  const workspaces = [
+    ...new Set(issues.map((issue) => Object.keys(issue.workspaceVersions)).flat()),
+  ].sort();
   const longestDepName = Math.max(...deps.map((dep) => dep.length));
 
   // Header line

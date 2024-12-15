@@ -38,4 +38,7 @@ export interface VariableMutation {
   after: unknown;
 }
 
-export type SaveData = Pick<GameStateStore, 'history' | 'historyIndex' | 'variables' | 'variableChanges'>;
+export type SaveData = Pick<
+  GameStateStore,
+  'history' | 'historyIndex' | 'variables' | 'variableChanges'
+>;

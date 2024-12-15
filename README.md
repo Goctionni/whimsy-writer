@@ -1,23 +1,30 @@
 # Readme
 
-## Prerequisites
+Whimsy writer is a system for writing text-based, interactive, story-driven games. You may already
+be familiar with other systems like Twine with Harlowe or SugarCube; Whimsy Writer is similar, but
+also different.
 
-1. Install npm / nodejs: [Website](https://nodejs.org/en)
-2. Install dependencies `npm i`
+How is it different? Primarily in terms of target audience. Whimsy Writer is intended for authors
+who already have some technical experience. Ideally in frontend / web development, but if you've
+been using SugarCube with a command-line tool like Tweego, you will also be able to pick this up
+quickly.
 
-## What users should do
+## Getting Started
 
-1. Setup `src/save-interface.ts` with the interface for your save-file.
-2. Update `src/init.ts` with your game's name and initial state
+In order to use Whimsy Writer, you will need to have NPM/NodeJS installed.
 
-## Running your game
+- [NPM/NodeJS Website](https://nodejs.org/en)
 
-While developing your game, you can run and test it using the command `npm run dev`.
+In addition, it is recommended to also have a modern code editor installed (such as VSCode).
 
-## Sharing your game with others
+- [VSCode Website](https://code.visualstudio.com/)
 
-Right now, this hasn't been tested. But you should be able to run `npm run build` to create a build for your game that can be shared. The build that's created will be placed in a "dist" folder.
+Once you have the above ready, you can create a new "Whimsy-writer" project by running:
 
-## Good to know!
+```bash
+npm create whimsy
+```
 
-Whimsy Writer needs to keep track of the names of your passages. Whenever you run either in dev-mode, or create a build; that will happen automatically. However, when doing neither of those things, for the type-system to know which passages you can refer to, you can either use `npm run update-passages` or `npm run watch-passages` to keep Whimsy-writer updated with your passages.
+After running through the setup, open the directory that's been created in your code editor
+(VSCode), and look for a file called `readme.md` for instructions on how to write and play your
+story.

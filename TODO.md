@@ -1,5 +1,18 @@
 ## Todo
 
+create whimsy
+jsx runtime (fn -> if)
+components from whimsy-writer lib should use ww-classnames, accept classnames as props and not have prose
+github actions
+
+Passage Props
+useProps
+Global Link
+Generalize Link
+move configs into folders?
+prettier & prettier package json
+eslint order imports
+
 Link Props
 Save / Load
 Session State

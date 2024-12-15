@@ -1,4 +1,5 @@
-import { ComponentType, useEffect, useRef } from 'react';
+import type { ComponentType } from 'react';
+import { useEffect, useRef } from 'react';
 import { BaseSidebar } from './base-sidebar';
 import { BaseStoryOutlet } from './base-story-outlet';
 import { useTryLoadSessionSave } from '../hooks/store/state-store';
@@ -8,7 +9,10 @@ interface BaseLayoutProps {
   StoryOutlet?: ComponentType<unknown>;
 }
 
-export function BaseLayout({ Sidebar = BaseSidebar, StoryOutlet = BaseStoryOutlet }: BaseLayoutProps) {
+export function BaseLayout({
+  Sidebar = BaseSidebar,
+  StoryOutlet = BaseStoryOutlet,
+}: BaseLayoutProps) {
   const tryLoadSessionSave = useTryLoadSessionSave();
   const isInitialRender = useRef(true);
   useEffect(() => {

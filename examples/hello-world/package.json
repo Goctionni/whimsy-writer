@@ -1,32 +1,37 @@
 {
   "name": "hello-world",
   "version": "1.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
+    "build": "vite build",
     "dev": "vite serve",
-    "build": "npm run update-passages && tsc -b && vite build",
     "lint": "eslint .",
-    "update-passages": "whimsy-gen",
-    "watch-passages": "whimsy-gen --watch",
-    "depcheck": "depcheck . --ignore-bin-package --ignores=@passage/*",
-    "typecheck": "tsc -p ./tsconfig.app.json"
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc -p ./tsconfig.app.json",
+    "update-passages": "npx whimsy-gen",
+    "watch-passages": "npx whimsy-gen --watch"
   },
   "dependencies": {
     "@tailwindcss/typography": "0.5.15",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "vite-plugin-singlefile": "2.0.2",
-    "whimsy-writer": "0.0.0"
+    "whimsy-writer": "0.1.2"
   },
   "devDependencies": {
-    "depcheck": "1.4.7",
+    "@eslint/js": "9.12.0",
     "@types/node": "22.7.9",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "@vitejs/plugin-react-swc": "3.7.1",
     "autoprefixer": "10.4.20",
     "eslint": "9.13.0",
-    "eslint-config-base": "0.0.0",
+    "eslint-import-resolver-typescript": "3.6.3",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-react-hooks": "5.1.0-rc-1460d67c-20241003",
+    "eslint-plugin-react-refresh": "0.4.12",
+    "globals": "15.10.0",
     "postcss": "8.4.47",
     "tailwindcss": "3.4.14",
     "typescript": "5.6.3",

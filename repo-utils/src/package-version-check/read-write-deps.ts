@@ -1,19 +1,32 @@
 import { z } from 'zod';
 
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
 import { execSync } from 'child_process';
 import { RepoDeps } from './types';
 import { env } from 'process';
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
 
-const __dirname = import.meta.dirname;
+if (!('__dirname' in globalThis)) {
+  globalThis.require = createRequire(import.meta.url);
+  globalThis.__filename = fileURLToPath(import.meta.url);
+  globalThis.__dirname = dirname(__filename);
+}
+
 const __root = resolve(__dirname, '../../..');
 
 const DepMapDef = z.record(z.string());
 const ResultDef = z.record(DepMapDef.optional());
 
 export function readRepositoryDependencies(): RepoDeps {
-  const depsResultStr = execSync(`npm -ws -i pkg get dependencies`, { encoding: 'utf-8', cwd: __root });
-  const devDepsResultStr = execSync(`npm -ws -i pkg get devDependencies`, { encoding: 'utf-8', cwd: __root });
+  const depsResultStr = execSync(`npm -ws -i pkg get dependencies`, {
+    encoding: 'utf-8',
+    cwd: __root,
+  });
+  const devDepsResultStr = execSync(`npm -ws -i pkg get devDependencies`, {
+    encoding: 'utf-8',
+    cwd: __root,
+  });
   const depsJson = ResultDef.parse(JSON.parse(depsResultStr));
   const devDepsJson = ResultDef.parse(JSON.parse(devDepsResultStr));
   const repos = [...new Set([...Object.keys(depsJson), ...Object.keys(devDepsJson)])];
@@ -38,12 +51,18 @@ export function writeWorkspaceDependencies(
   devDependencies: Record<string, string>,
 ) {
   const setArgs: string[] = [];
-  if (Object.keys(dependencies).length) setArgs.push(`dependencies='${JSON.stringify(dependencies)}'`);
-  if (Object.keys(devDependencies).length) setArgs.push(`devDependencies='${JSON.stringify(devDependencies)}'`);
+  if (Object.keys(dependencies).length)
+    setArgs.push(`dependencies='${JSON.stringify(dependencies)}'`);
+  if (Object.keys(devDependencies).length)
+    setArgs.push(`devDependencies='${JSON.stringify(devDependencies)}'`);
   if (!setArgs.length) return;
 
   if (workspace === getRootWorkspaceName()) {
-    execSync(`npm --json pkg set ${setArgs.join(' ')}`, { encoding: 'utf-8', cwd: __root, shell: env.SHELL });
+    execSync(`npm --json pkg set ${setArgs.join(' ')}`, {
+      encoding: 'utf-8',
+      cwd: __root,
+      shell: env.SHELL,
+    });
   } else {
     execSync(`npm --json -w ${workspace} pkg set ${setArgs.join(' ')}`, {
       encoding: 'utf-8',

@@ -1,0 +1,8 @@
+{
+  "printWidth": 100,
+  "quoteProps": "consistent",
+  "semi": true,
+  "trailingComma": "all",
+  "singleQuote": true,
+  "plugins": ["prettier-plugin-packagejson"]
+}

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useGetPassage, useGotoPassage } from '../hooks/store/store-utils';
 
 interface LinkProps {

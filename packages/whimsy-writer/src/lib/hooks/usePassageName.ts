@@ -1,4 +1,4 @@
-import { useGetPassageName, useCurrentPassage } from './store/store-utils';
+import { useCurrentPassage, useGetPassageName } from './store/store-utils';
 
 export function usePassageName() {
   const passage = useCurrentPassage();
