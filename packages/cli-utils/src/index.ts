@@ -33,10 +33,7 @@ export function getArg(
       if (boolean) return true;
       else if (!multiple) return argv[i + 1];
       else values.push(argv[i + 1]);
-    } else if (
-      arg.startsWith(`--${argName}=`) ||
-      (shorthand && arg.startsWith(`-${shorthand}=`))
-    ) {
+    } else if (arg.startsWith(`--${argName}=`) || (shorthand && arg.startsWith(`-${shorthand}=`))) {
       const valueStr = arg.slice(arg.indexOf('=') + 1);
       if (boolean) {
         const normalizedValue = valueStr.toLowerCase().trim();
