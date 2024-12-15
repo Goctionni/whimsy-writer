@@ -1,7 +1,14 @@
 import type { DuplicateNameError, PassageMap } from '../types';
 import { readFileSync } from 'fs';
 import { dirname, resolve } from 'path';
+import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
+
+if (!('__dirname' in globalThis)) {
+  globalThis.require = createRequire(import.meta.url);
+  globalThis.__filename = fileURLToPath(import.meta.url);
+  globalThis.__dirname = dirname(__filename);
+}
 
 function generateLazyImports(
   passageRoot: string,
@@ -28,7 +35,6 @@ function generateLazyImports(
   return lazyImportLines;
 }
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const workspaceRoot = __dirname.slice(0, __dirname.lastIndexOf('dist'));
 const templatePath = resolve(workspaceRoot, 'templates/passage-map-template.ts');
 const template = readFileSync(templatePath, 'utf-8');
