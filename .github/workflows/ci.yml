@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Global install whimsy-writer
+        run: npm i -g whimsy-writer
+
       - name: Run builds
         run: npm run build-cli-utils && npm run build-lib && npm run build-create && npm run -w hello-world update-passages
 
