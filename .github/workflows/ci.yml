@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Run builds
-        run: npm run build-cli-utils && npm run build-lib && npm run build-create && npm run -w hello-world build
+        run: npm run build-cli-utils && npm run build-lib && npm run build-create && npm run -w hello-world update-passages
 
       - name: Run lint
         run: npm run lint

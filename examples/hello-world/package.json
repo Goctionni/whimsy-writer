@@ -4,13 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "npm run update-passages && vite build",
+    "build": "vite build",
     "dev": "vite serve",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./tsconfig.app.json",
-    "update-passages": "whimsy-gen",
-    "watch-passages": "whimsy-gen --watch"
+    "update-passages": "npx whimsy-gen",
+    "watch-passages": "npx whimsy-gen --watch"
   },
   "dependencies": {
     "@tailwindcss/typography": "0.5.15",
