@@ -9,6 +9,7 @@
     "repo-utils"
   ],
   "scripts": {
+    "build-cli-utils": "npm run build -w cli-utils",
     "build-create": "npm run build -w create-whimsy",
     "build-lib": "npm run build -w whimsy-writer",
     "depcheck": "npm run repo-depcheck -w repo-utils",
